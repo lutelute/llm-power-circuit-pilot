@@ -119,8 +119,8 @@ def make_json_panel(W=900, H=520):
 
 
 def make_ascii_panel(ascii_text, W=900, H=520):
-    """Form-A: ダーク背景 + Menlo等幅フォント（ターミナル風）"""
-    img  = Image.new("RGB", (W, H), (22, 22, 22))   # ほぼ黒
+    """Form-A: 白背景 + Menlo等幅フォント（アスキーアート）"""
+    img  = Image.new("RGB", (W, H), (255, 255, 255))  # 白背景
     draw = ImageDraw.Draw(img)
     fh   = jp_font(17)
     fm_  = jp_font(14)
@@ -132,17 +132,17 @@ def make_ascii_panel(ascii_text, W=900, H=520):
               fill=_rgb(CMISS), font=fh)
     y += 26
 
-    # アスキーアート本体（Menlo）
+    # アスキーアート本体（Menlo・濃い文字色）
     lines = ascii_text.splitlines()
     for raw in lines:
-        draw.text((12, y), raw, fill=(180, 255, 180), font=fs_m)
+        draw.text((12, y), raw, fill=(30, 40, 80), font=fs_m)
         bb = draw.textbbox((12, y), raw, font=fs_m)
         y += (bb[3] - bb[1]) + 2
         if y > H - 60:
             break
 
     # 区切り線
-    draw.line([(12, H-54), (W-12, H-54)], fill=(80, 80, 80), width=1)
+    draw.line([(12, H-54), (W-12, H-54)], fill=(200, 200, 200), width=1)
 
     # AI出力サマリー（失敗）
     draw.text((12, H-46),
@@ -150,7 +150,7 @@ def make_ascii_panel(ascii_text, W=900, H=520):
               fill=_rgb(CMISS), font=fm_)
     draw.text((12, H-24),
               "  ※ ASCII アートに VDC が図示されていないため LLM が見落とし",
-              fill=(180, 180, 100), font=jp_font(12))
+              fill=(150, 100, 0), font=jp_font(12))
 
     return np.array(img)
 
@@ -166,7 +166,7 @@ def draw_topology(ax, missing_vdc):
         ax.add_patch(FancyBboxPatch(
             (x-w/2, y-h/2), w, h,
             boxstyle="round,pad=0.06",
-            fc=color, ec="white", lw=1.3, linestyle=ls))
+            fc=color, ec="#CCCCCC", lw=1.0, linestyle=ls))
         ax.text(x, y, lbl, ha="center", va="center",
                 fontsize=fs, color="white", fontweight="bold")
 
@@ -283,7 +283,7 @@ def main():
     img_ascii = make_ascii_panel(d["ascii_input"], W=900, H=500)
 
     fig = plt.figure(figsize=(20, 17))
-    fig.patch.set_facecolor("#F4F6F7")
+    fig.patch.set_facecolor("white")
 
     fig.text(0.5, 0.988,
              "AI 出力例：C4（3相 VSI インバータ）  T1 トポロジ認識タスク",
