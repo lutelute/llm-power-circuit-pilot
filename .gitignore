@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# macOS
+.DS_Store
+.AppleDouble
+
+# セキュリティ
+logs/security/
+
+# 大きな中間JSONは除外（生データのみ保持）
+05_実験結果/evaluated_results_*.json
+05_実験結果/evaluated_merged_20260430_111818.json
+05_実験結果/evaluated_merged_20260430_111927.json

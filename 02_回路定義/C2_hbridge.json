@@ -1,0 +1,46 @@
+{
+  "circuit_id": "C2",
+  "name": "H-bridge（フルブリッジ）インバータ",
+  "description": "4つのスイッチ（MOSFET）とフリーホイールダイオードで構成されるDC-ACインバータの基本トポロジ",
+  "difficulty": 3,
+  "components": [
+    {"id": "VDC",  "type": "DCVoltageSource", "value": 48,  "unit": "V"},
+    {"id": "Q1",   "type": "MOSFET", "position": "upper-left",  "state": "open"},
+    {"id": "Q2",   "type": "MOSFET", "position": "lower-left",  "state": "open"},
+    {"id": "Q3",   "type": "MOSFET", "position": "upper-right", "state": "open"},
+    {"id": "Q4",   "type": "MOSFET", "position": "lower-right", "state": "open"},
+    {"id": "Rload","type": "Resistor","value": 10, "unit": "Ω", "position": "center-load"}
+  ],
+  "nodes": ["VDC+", "VDC-", "MidLeft", "MidRight"],
+  "connections": [
+    {"from": "VDC+",    "to": "Q1_drain"},
+    {"from": "Q1_drain","to": "Q3_drain"},
+    {"from": "Q1_source","to": "MidLeft"},
+    {"from": "Q3_source","to": "MidRight"},
+    {"from": "MidLeft", "to": "Q2_drain"},
+    {"from": "MidRight","to": "Q4_drain"},
+    {"from": "Q2_source","to": "VDC-"},
+    {"from": "Q4_source","to": "VDC-"},
+    {"from": "MidLeft", "to": "Rload_a"},
+    {"from": "MidRight","to": "Rload_b"}
+  ],
+  "ground": "VDC-",
+  "pwm_pairs": [
+    {"pair": "Q1+Q4", "phase": 0},
+    {"pair": "Q2+Q3", "phase": 180}
+  ],
+  "ground_truth": {
+    "topology": {
+      "component_count": 6,
+      "node_count": 4,
+      "bridge_configuration": "full-bridge",
+      "switch_pairs": 2
+    },
+    "analysis": {
+      "output_voltage_peak_V": 48.0,
+      "output_voltage_rms_V": 48.0,
+      "current_at_full_load_A": 4.8,
+      "conduction_mode": "complementary-switching"
+    }
+  }
+}

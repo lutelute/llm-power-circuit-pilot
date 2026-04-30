@@ -1,0 +1,62 @@
+{
+  "circuit_id": "C4",
+  "name": "3相電圧形インバータ（VSI）",
+  "description": "6つのIGBT/MOSFETと3相LCフィルタで構成される交流モータ駆動用インバータ",
+  "difficulty": 4,
+  "components": [
+    {"id": "VDC",  "type": "DCVoltageSource", "value": 600, "unit": "V"},
+    {"id": "CDC",  "type": "Capacitor",        "value": 1000, "unit": "μF", "role": "dc-link"},
+    {"id": "Q1",   "type": "IGBT", "phase": "A", "position": "upper"},
+    {"id": "Q2",   "type": "IGBT", "phase": "A", "position": "lower"},
+    {"id": "Q3",   "type": "IGBT", "phase": "B", "position": "upper"},
+    {"id": "Q4",   "type": "IGBT", "phase": "B", "position": "lower"},
+    {"id": "Q5",   "type": "IGBT", "phase": "C", "position": "upper"},
+    {"id": "Q6",   "type": "IGBT", "phase": "C", "position": "lower"},
+    {"id": "Rload_A", "type": "Resistor", "value": 10, "unit": "Ω", "phase": "A"},
+    {"id": "Rload_B", "type": "Resistor", "value": 10, "unit": "Ω", "phase": "B"},
+    {"id": "Rload_C", "type": "Resistor", "value": 10, "unit": "Ω", "phase": "C"}
+  ],
+  "nodes": ["DC+", "DC-", "PhA", "PhB", "PhC", "NeutralLoad", "StarPoint"],
+  "connections": [
+    {"from": "VDC+",    "to": "DC+"},
+    {"from": "VDC-",    "to": "DC-"},
+    {"from": "DC+",     "to": "CDC_pos"},
+    {"from": "CDC_neg", "to": "DC-"},
+    {"from": "DC+",     "to": "Q1_collector"},
+    {"from": "Q1_emitter","to": "PhA"},
+    {"from": "PhA",     "to": "Q2_collector"},
+    {"from": "Q2_emitter","to": "DC-"},
+    {"from": "DC+",     "to": "Q3_collector"},
+    {"from": "Q3_emitter","to": "PhB"},
+    {"from": "PhB",     "to": "Q4_collector"},
+    {"from": "Q4_emitter","to": "DC-"},
+    {"from": "DC+",     "to": "Q5_collector"},
+    {"from": "Q5_emitter","to": "PhC"},
+    {"from": "PhC",     "to": "Q6_collector"},
+    {"from": "Q6_emitter","to": "DC-"},
+    {"from": "PhA",     "to": "Rload_A_a"},
+    {"from": "Rload_A_b","to": "NeutralLoad"},
+    {"from": "PhB",     "to": "Rload_B_a"},
+    {"from": "Rload_B_b","to": "NeutralLoad"},
+    {"from": "PhC",     "to": "Rload_C_a"},
+    {"from": "Rload_C_b","to": "NeutralLoad"}
+  ],
+  "ground": "DC-",
+  "modulation": "SVPWM",
+  "ground_truth": {
+    "topology": {
+      "component_count": 11,
+      "node_count": 7,
+      "phase_count": 3,
+      "bridge_legs": 3,
+      "converter_type": "3phase-VSI"
+    },
+    "analysis": {
+      "phase_voltage_peak_V": 244.9,
+      "phase_voltage_rms_V": 173.2,
+      "line_voltage_rms_V": 300.0,
+      "modulation_index": 0.816,
+      "dc_link_utilization": 0.816
+    }
+  }
+}

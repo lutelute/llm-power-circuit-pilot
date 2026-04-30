@@ -1,0 +1,35 @@
+{
+  "circuit_id": "C1",
+  "name": "直列RLC回路",
+  "description": "電源・抵抗・インダクタ・キャパシタを直列接続した基本フィルタ回路",
+  "difficulty": 1,
+  "components": [
+    {"id": "V1", "type": "VoltageSource", "value": 10, "unit": "V", "params": {"frequency": 0}},
+    {"id": "R1", "type": "Resistor",       "value": 100, "unit": "Ω"},
+    {"id": "L1", "type": "Inductor",        "value": 10,  "unit": "mH"},
+    {"id": "C1", "type": "Capacitor",       "value": 1,   "unit": "μF"}
+  ],
+  "nodes": ["N0", "N1", "N2", "N3"],
+  "connections": [
+    {"from": "V1+", "to": "N1", "from_node": "N0"},
+    {"from": "N1",  "to": "R1", "to_node":   "N2"},
+    {"from": "N2",  "to": "L1", "to_node":   "N3"},
+    {"from": "N3",  "to": "C1", "to_node":   "N0"}
+  ],
+  "ground": "N0",
+  "ground_truth": {
+    "topology": {
+      "component_count": 4,
+      "node_count": 4,
+      "series_connection": true,
+      "loop_count": 1
+    },
+    "analysis": {
+      "resonant_frequency_Hz": 503.3,
+      "resonant_frequency_formula": "1 / (2*pi*sqrt(L*C))",
+      "impedance_at_resonance_Ohm": 100.0,
+      "Q_factor": 0.316,
+      "Q_formula": "(1/R)*sqrt(L/C)"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "circuit_id": "C3",
+  "name": "Buckコンバータ（降圧チョッパ）",
+  "description": "スイッチ・ダイオード・インダクタ・キャパシタで構成される降圧DC-DC変換器",
+  "difficulty": 2,
+  "components": [
+    {"id": "Vin",  "type": "DCVoltageSource", "value": 24, "unit": "V"},
+    {"id": "Q1",   "type": "MOSFET", "role": "main-switch"},
+    {"id": "D1",   "type": "Diode",  "role": "freewheeling"},
+    {"id": "L1",   "type": "Inductor","value": 100, "unit": "μH"},
+    {"id": "C1",   "type": "Capacitor","value": 100, "unit": "μF"},
+    {"id": "Rload","type": "Resistor","value": 5, "unit": "Ω"}
+  ],
+  "nodes": ["N_in", "N_sw", "N_out", "GND"],
+  "connections": [
+    {"from": "Vin+",     "to": "N_in"},
+    {"from": "N_in",     "to": "Q1_drain"},
+    {"from": "Q1_source","to": "N_sw"},
+    {"from": "N_sw",     "to": "D1_cathode"},
+    {"from": "D1_anode", "to": "GND"},
+    {"from": "N_sw",     "to": "L1_a"},
+    {"from": "L1_b",     "to": "N_out"},
+    {"from": "N_out",    "to": "C1_pos"},
+    {"from": "C1_neg",   "to": "GND"},
+    {"from": "N_out",    "to": "Rload_a"},
+    {"from": "Rload_b",  "to": "GND"},
+    {"from": "Vin-",     "to": "GND"}
+  ],
+  "ground": "GND",
+  "operating_conditions": {
+    "duty_cycle": 0.5,
+    "switching_frequency_kHz": 100
+  },
+  "ground_truth": {
+    "topology": {
+      "component_count": 6,
+      "node_count": 4,
+      "converter_type": "buck",
+      "voltage_conversion": "step-down"
+    },
+    "analysis": {
+      "output_voltage_V": 12.0,
+      "output_voltage_formula": "Vin * D",
+      "inductor_current_ripple_A": 0.6,
+      "capacitor_voltage_ripple_V": 0.045,
+      "load_current_A": 2.4
+    }
+  }
+}

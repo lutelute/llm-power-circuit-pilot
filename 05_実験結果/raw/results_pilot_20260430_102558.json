@@ -1,0 +1,24 @@
+[
+  {
+    "model": "qwen3.5:9b",
+    "task": "T1",
+    "circuit": "C1",
+    "form": "form_a",
+    "trial": 1,
+    "response": "[\n  {\n    \"components\": [\n      {\n        \"id\": \"V1\",\n        \"type\": \"VoltageSource\",\n        \"value\": 10,\n        \"unit\": \"V\"\n      },\n      {\n        \"id\": \"R1\",\n        \"type\": \"Resistor\",\n        \"value\": 100,\n        \"unit\": \"\\u03a9\"\n      },\n      {\n        \"id\": \"L1\",\n        \"type\": \"Inductor\",\n        \"value\": 0.01,\n        \"unit\": \"H\"\n      },\n      {\n        \"id\": \"C1\",\n        \"type\": \"Capacitor\",\n        \"value\": 1e-06,\n        \"unit\": \"F\"\n      }\n    ],\n    \"connections\": [\n      {\n        \"from\": \"N0\",\n        \"to\": \"V1_pos\"\n      },\n      {\n        \"from\": \"V1_neg\",\n        \"to\": \"N1\"\n      },\n      {\n        \"from\": \"N1\",\n        \"to\": \"R1_in\"\n      },\n      {\n        \"from\": \"R1_out\",\n        \"to\": \"L1_in\"\n      },\n      {\n        \"from\": \"L1_out\",\n        \"to\": \"C1_in\"\n      },\n      {\n        \"from\": \"C1_out\",\n        \"to\": \"N2\"\n      },\n      {\n        \"from\": \"V1_pos\",\n        \"to\": \"GND\"\n      },\n      {\n        \"from\": \"R1_in\",\n        \"to\": \"GND\"\n      },\n      {\n        \"from\": \"L1_in\",\n        \"to\": \"GND\"\n      },\n      {\n        \"from\": \"C1_in\",\n        \"to\": \"GND\"\n      },\n      {\n        \"from\": \"N2\",\n        \"to\": \"GND\"\n      }\n    ],\n    \"topology_summary\": {\n      \"component_count\": 4,\n      \"node_count\": 5,\n      \"circuit_type\": \"直列RLC回路（電圧源V1、抵抗R1、インダクタL1、キャパシタC1が直列に接続され、全体がグランドGNDと並列接続された構成）\"\n    }\n  }\n]",
+    "elapsed_s": 32.15,
+    "error": null,
+    "timestamp": "2026-04-30T10:25:45.759522"
+  },
+  {
+    "model": "qwen3.5:9b",
+    "task": "T1",
+    "circuit": "C1",
+    "form": "form_c",
+    "trial": 1,
+    "response": "[{\"components\":[{\"id\":\"V1\",\"type\":\"VoltageSource\",\"value\":10,\"unit\":\"V\"},{\"id\":\"R1\",\"type\":\"Resistor\",\"value\":100,\"unit\":\"Ω\"},{\"id\":\"L1\",\"type\":\"Inductor\",\"value\":10,\"unit\":\"mH\"},{\"id\":\"C1\",\"type\":\"Capacitor\",\"value\":1,\"unit\":\"μF\"}],\"connections\":[{\"from\":\"V1+\",\"to\":\"N1\"},{\"from\":\"N1\",\"to\":\"R1\"},{\"from\":\"R1\",\"to\":\"N2\"},{\"from\":\"N2\",\"to\":\"L1\"},{\"from\":\"L1\",\"to\":\"N3\"},{\"from\":\"N3\",\"to\":\"C1\"},{\"from\":\"C1\",\"to\":\"N0\"}],\"topology_summary\":{\"component_count\":4,\"node_count\":4,\"circuit_type\":\"直列RLC回路\"}}]",
+    "elapsed_s": 12.99,
+    "error": null,
+    "timestamp": "2026-04-30T10:25:58.746319"
+  }
+]
