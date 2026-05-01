@@ -11,6 +11,9 @@ __pycache__/
 # セキュリティ
 logs/security/
 
+# 助成申請関連（非公開）
+01_実験計画/
+
 # 大きな中間JSONは除外（生データのみ保持）
 05_実験結果/evaluated_results_*.json
 05_実験結果/evaluated_merged_20260430_111818.json
